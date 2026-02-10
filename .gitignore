@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+dist/
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+
+# CRITICAL: Wallet seed phrase files - NEVER commit
+recover_wallet*.exp
+
+# Solana keypairs
+**/id.json
+*keypair*.json
+
+# Python files with hardcoded API keys
+openmind_agent.py
+openmind_chat.py
+openmind_simple_chat.py
+
+# Additional sensitive patterns
+*.exp
+*secret*
+*credential*
+
+# Logs
+*.log
+
+# Temp files
+tmpclaude-*
+nul
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+blind-auction/target/
+blind-auction-frontend/.next/
+blind-auction-frontend/node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# Other projects (not part of blind auction)
+sdk/
+OM1/
+miden-docs/
+mx-semantics/
+opengradient-audit/
+seismic-alloy/
+seismic-foundry/
+seismic-solidity/
+seismic-starter/
+summit/
+zk-benchmark/
+/src/
