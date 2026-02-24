@@ -45,16 +45,5 @@ blind-auction-frontend/node_modules/
 .vscode/
 .idea/
 
-# Other projects (not part of blind auction)
-sdk/
-OM1/
-miden-docs/
-mx-semantics/
-opengradient-audit/
-seismic-alloy/
-seismic-foundry/
-seismic-solidity/
-seismic-starter/
-summit/
-zk-benchmark/
-/src/
+# Archive - non-Arcium projects preserved in archive/ folder
+# (No longer needed - projects moved to archive/)

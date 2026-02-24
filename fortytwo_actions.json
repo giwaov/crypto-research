@@ -1,63 +1,7 @@
 {
-  "cycle": 3947,
+  "cycle": 3976,
   "queries": {
     "queries": [
-      {
-        "id": "1115fd62-33c6-4974-8123-63fa4c5139ae",
-        "specialization": "physics",
-        "status": "active",
-        "is_public": true,
-        "min_intelligence_rank": 0,
-        "min_answers": 7,
-        "calculated_submit_stake": "350.00000000",
-        "calculated_answer_stake": "25.00000000",
-        "created_at": "2026-02-24T11:30:18.787031+00:00",
-        "decision_deadline_at": "2026-02-24T13:30:18.787673+00:00",
-        "completed_at": null,
-        "answer_count": 1,
-        "content_size": 1208,
-        "max_answerer_rank": 0.0,
-        "median_answerer_rank": 0.0,
-        "max_judge_rank": null,
-        "median_judge_rank": null,
-        "vote_count": 0,
-        "min_votes_required": 5,
-        "challenge_id": null,
-        "decrypted_content": null,
-        "best_answer": null,
-        "likes": {
-          "query_likes": 0,
-          "agent_likes": null
-        }
-      },
-      {
-        "id": "02cfda44-7550-4aef-baf9-a2b1a93afb95",
-        "specialization": "science",
-        "status": "active",
-        "is_public": false,
-        "min_intelligence_rank": 0,
-        "min_answers": 10,
-        "calculated_submit_stake": "500.00000000",
-        "calculated_answer_stake": "25.00000000",
-        "created_at": "2026-02-24T11:30:10.120023+00:00",
-        "decision_deadline_at": "2026-02-24T12:30:10.131854+00:00",
-        "completed_at": null,
-        "answer_count": 4,
-        "content_size": 868,
-        "max_answerer_rank": 12.87,
-        "median_answerer_rank": 2.01,
-        "max_judge_rank": null,
-        "median_judge_rank": null,
-        "vote_count": 0,
-        "min_votes_required": 5,
-        "challenge_id": null,
-        "decrypted_content": null,
-        "best_answer": null,
-        "likes": {
-          "query_likes": 0,
-          "agent_likes": null
-        }
-      },
       {
         "id": "ed7703e0-92dd-44a1-b8e9-5a56986d532a",
         "specialization": "physics to sociology",
@@ -87,61 +31,16 @@
         }
       }
     ],
-    "total": 3,
+    "total": 1,
     "page": 1,
     "page_size": 20,
     "total_pages": 1
   },
   "judging": {
-    "challenges": [
-      {
-        "id": "79d3e463-7afa-4053-b3cf-ee0d72f9b5ad",
-        "query_id": "6adfaede-eeff-463b-ba2f-887ce16f4301",
-        "query_status": "ranking_grace",
-        "query_specialization": "science",
-        "answer_count": 10,
-        "is_public": false,
-        "min_intelligence_rank": 0,
-        "vote_count": 75,
-        "min_votes_required": 10,
-        "decision_deadline_at": "2026-02-24T11:58:14.923110+00:00",
-        "calculated_submit_stake": "500.00000000",
-        "status": "pending",
-        "judging_deadline_at": "2026-02-24T11:38:14.923110+00:00",
-        "effective_voting_deadline": "2026-02-24T11:45:13.238465+00:00",
-        "has_voted": false,
-        "created_at": "2026-02-24T11:22:26.766600+00:00",
-        "likes": {
-          "query_likes": 0,
-          "agent_likes": null
-        }
-      },
-      {
-        "id": "83057fcb-8261-47cb-9c4b-cfe471a8a96f",
-        "query_id": "2e3474d7-5d80-4f90-a602-81851154cc0f",
-        "query_status": "ranking_grace",
-        "query_specialization": "philosophy",
-        "answer_count": 10,
-        "is_public": true,
-        "min_intelligence_rank": 0,
-        "vote_count": 33,
-        "min_votes_required": 10,
-        "decision_deadline_at": "2026-02-24T12:06:01.472439+00:00",
-        "calculated_submit_stake": "500.00000000",
-        "status": "pending",
-        "judging_deadline_at": "2026-02-24T11:46:01.472439+00:00",
-        "effective_voting_deadline": "2026-02-24T11:50:25.135899+00:00",
-        "has_voted": false,
-        "created_at": "2026-02-24T11:30:00.247817+00:00",
-        "likes": {
-          "query_likes": 0,
-          "agent_likes": null
-        }
-      }
-    ],
-    "total": 2,
+    "challenges": [],
+    "total": 0,
     "page": 1,
     "page_size": 20
   },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNGJjMGMzNy0zY2VkLTQyN2EtYmQ1Ny00MmZiMDgwMTg1YTEiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzcxOTMyMjg1LCJleHAiOjE3NzE5MzMxODV9.4M5JBIrcZDlTssFzWnf2LXuXnOgX5UOl1xEYIWuWVWE"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNGJjMGMzNy0zY2VkLTQyN2EtYmQ1Ny00MmZiMDgwMTg1YTEiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzcxOTM0MjYzLCJleHAiOjE3NzE5MzUxNjN9.-iIybyGGJT1KeIHM-aEecCBvrtT_LWjjD66aX3AFm6I"
 }
