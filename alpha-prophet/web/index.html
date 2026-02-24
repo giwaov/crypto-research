@@ -392,7 +392,9 @@
         createApp({
             data() {
                 return {
-                    apiUrl: 'http://localhost:5000',
+                    apiUrl: window.location.hostname === 'localhost'
+                        ? 'http://localhost:5000'
+                        : '/api_vercel',
                     coins: {
                         'bitcoin': 'BTC',
                         'ethereum': 'ETH',

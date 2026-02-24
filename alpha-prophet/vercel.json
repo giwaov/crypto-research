@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "framework": null,
+  "installCommand": "pip install requests",
+  "builds": [
+    {
+      "src": "web/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api_vercel/*.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api_vercel/predict",
+      "dest": "/api_vercel/predict.py"
+    },
+    {
+      "src": "/api_vercel/current/(.*)",
+      "dest": "/api_vercel/current.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/web/index.html"
+    }
+  ]
+}
