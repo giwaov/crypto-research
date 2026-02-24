@@ -3,10 +3,12 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "python api_server.py"
+startCommand = "python -u api_server.py"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10
 
 [[deploy.healthcheck]]
 path = "/api/health"
 port = 5000
+timeout = 30
+interval = 60

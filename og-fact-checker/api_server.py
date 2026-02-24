@@ -23,15 +23,23 @@ from factcheck import (
 
 load_dotenv()
 
+# Validate environment variables
+required_env_vars = ["OG_PRIVATE_KEY", "MEMSYNC_API_KEY"]
+missing_vars = [var for var in required_env_vars if not os.environ.get(var)]
+if missing_vars:
+    print(f"⚠️  Warning: Missing environment variables: {', '.join(missing_vars)}")
+    print("   The API will start but fact checking will fail without proper credentials")
+
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend
 
 # Initialize OpenGradient client on startup
 try:
     og_client = get_og_client()
-    print("✅ OpenGradient client initialized")
+    print("✅ OpenGradient client initialized successfully")
 except Exception as e:
     print(f"❌ Failed to initialize OpenGradient client: {e}")
+    print(f"   Make sure OG_PRIVATE_KEY and MEMSYNC_API_KEY are set in environment variables")
     og_client = None
 
 
