@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": "web",
+  "framework": null,
+  "installCommand": "echo 'No install needed - static site'",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

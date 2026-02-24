@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fact Checker | TEE-Verified Claims</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .verdict-true { @apply bg-green-100 text-green-800 border-green-300; }
+        .verdict-false { @apply bg-red-100 text-red-800 border-red-300; }
+        .verdict-mostly-true { @apply bg-green-50 text-green-700 border-green-200; }
+        .verdict-mostly-false { @apply bg-red-50 text-red-700 border-red-200; }
+        .verdict-misleading { @apply bg-yellow-100 text-yellow-800 border-yellow-300; }
+        .verdict-unverifiable { @apply bg-gray-100 text-gray-800 border-gray-300; }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .confidence-bar {
+            transition: width 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div id="app" class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center text-white mb-12">
+            <h1 class="text-5xl font-bold mb-4">
+                <i class="fas fa-shield-check mr-3"></i>
+                AI Fact Checker
+            </h1>
+            <p class="text-xl opacity-90">TEE-Verified Claims on OpenGradient</p>
+            <p class="text-sm opacity-75 mt-2">Cryptographically attested • Tamper-proof • On-chain verification</p>
+        </header>
+
+        <!-- Main Card -->
+        <div class="max-w-4xl mx-auto glass rounded-2xl shadow-2xl p-8 mb-8">
+            <!-- Input Section -->
+            <div class="mb-8">
+                <label class="block text-gray-700 font-semibold mb-3 text-lg">
+                    Enter a claim to verify:
+                </label>
+                <textarea
+                    v-model="claim"
+                    @keydown.ctrl.enter="checkClaim"
+                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none transition-colors resize-none"
+                    rows="3"
+                    placeholder='e.g., "The Great Wall of China is visible from space"'
+                    :disabled="loading"
+                ></textarea>
+
+                <!-- Model Selection -->
+                <div class="flex items-center gap-4 mt-4">
+                    <select
+                        v-model="selectedModel"
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500"
+                        :disabled="loading"
+                    >
+                        <option value="claude-3.5-haiku">Claude 3.5 Haiku (Fastest, Cheapest)</option>
+                        <option value="gpt-4o">GPT-4o</option>
+                        <option value="claude-4.0-sonnet">Claude 4.0 Sonnet</option>
+                        <option value="grok-3-beta">Grok 3 Beta</option>
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    </select>
+
+                    <button
+                        @click="checkClaim"
+                        :disabled="!claim.trim() || loading"
+                        class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                        <i class="fas fa-search" v-if="!loading"></i>
+                        <i class="fas fa-spinner fa-spin" v-if="loading"></i>
+                        {{ loading ? 'Verifying...' : 'Check Fact' }}
+                    </button>
+                </div>
+
+                <p class="text-sm text-gray-500 mt-2">
+                    <i class="fas fa-keyboard mr-1"></i>
+                    Press Ctrl+Enter to submit
+                </p>
+            </div>
+
+            <!-- Loading State -->
+            <div v-if="loading" class="text-center py-12">
+                <div class="inline-block">
+                    <i class="fas fa-circle-notch fa-spin text-5xl text-purple-600 mb-4"></i>
+                    <p class="text-gray-600 font-medium">Analyzing claim with TEE-verified AI...</p>
+                    <p class="text-sm text-gray-500 mt-2">This may take 10-30 seconds</p>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div v-if="error" class="bg-red-50 border-2 border-red-300 rounded-lg p-6 mb-6 slide-in">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-2xl mt-1"></i>
+                    <div>
+                        <h3 class="font-bold text-red-800 mb-2">Error</h3>
+                        <p class="text-red-700">{{ error }}</p>
+                        <button @click="error = null" class="text-red-600 hover:text-red-800 text-sm font-medium mt-2">
+                            Dismiss
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div v-if="result && !loading" class="space-y-6 slide-in">
+                <!-- Verdict Badge -->
+                <div class="text-center">
+                    <div
+                        class="inline-block px-8 py-4 rounded-full border-4 font-bold text-2xl"
+                        :class="verdictClass(result.verdict)"
+                    >
+                        <i :class="verdictIcon(result.verdict)" class="mr-2"></i>
+                        {{ result.verdict.replace('_', ' ') }}
+                    </div>
+                </div>
+
+                <!-- Confidence -->
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-semibold text-gray-700">Confidence</span>
+                        <span class="font-bold text-purple-600 text-lg">{{ result.confidence }}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div
+                            class="confidence-bar h-full rounded-full"
+                            :class="confidenceColor(result.confidence)"
+                            :style="{ width: result.confidence + '%' }"
+                        ></div>
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="flex items-center gap-2 text-gray-700">
+                    <i class="fas fa-tag"></i>
+                    <span class="font-semibold">Category:</span>
+                    <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+                        {{ result.category }}
+                    </span>
+                </div>
+
+                <!-- Evidence -->
+                <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
+                    <h3 class="font-bold text-blue-900 mb-3 flex items-center gap-2">
+                        <i class="fas fa-list-check"></i>
+                        Evidence
+                    </h3>
+                    <ul class="space-y-2">
+                        <li v-for="(item, i) in result.evidence" :key="i" class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-blue-600 mt-1"></i>
+                            <span class="text-blue-900">{{ item }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Reasoning -->
+                <div class="bg-gray-50 border-2 border-gray-200 rounded-lg p-6">
+                    <h3 class="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                        <i class="fas fa-brain"></i>
+                        Reasoning
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">{{ result.reasoning }}</p>
+                </div>
+
+                <!-- Sources -->
+                <div v-if="result.sources && result.sources.length" class="bg-purple-50 border-2 border-purple-200 rounded-lg p-6">
+                    <h3 class="font-bold text-purple-900 mb-3 flex items-center gap-2">
+                        <i class="fas fa-book"></i>
+                        Sources
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span v-for="(source, i) in result.sources" :key="i"
+                              class="bg-white text-purple-700 px-3 py-1 rounded-full text-sm border border-purple-300">
+                            {{ source }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Contradiction Warning -->
+                <div v-if="result.contradiction_flag" class="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-6">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 text-xl mt-1"></i>
+                        <div>
+                            <h3 class="font-bold text-yellow-900 mb-2">Contradiction Detected</h3>
+                            <p class="text-yellow-800">{{ result.contradiction_flag }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEE Proof -->
+                <div class="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+                    <h3 class="font-bold text-green-900 mb-3 flex items-center gap-2">
+                        <i class="fas fa-lock"></i>
+                        TEE Verification Proof
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-600">Model:</span>
+                            <span class="ml-2 font-mono text-green-800">{{ result.proof?.model }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Timestamp:</span>
+                            <span class="ml-2 font-mono text-green-800">{{ formatDate(result.proof?.timestamp) }}</span>
+                        </div>
+                        <div v-if="result.proof?.payment_hash" class="md:col-span-2">
+                            <span class="text-gray-600">Payment Hash:</span>
+                            <code class="ml-2 text-xs bg-white px-2 py-1 rounded text-green-800 break-all">
+                                {{ result.proof.payment_hash }}
+                            </code>
+                        </div>
+                    </div>
+                    <p class="text-xs text-green-700 mt-3">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        This check was verified in a Trusted Execution Environment and settled on-chain via OpenGradient's x402 protocol.
+                    </p>
+                </div>
+
+                <!-- Cache Info -->
+                <div v-if="result.from_cache" class="text-center text-sm text-gray-500">
+                    <i class="fas fa-bolt mr-1"></i>
+                    Loaded from cache (0 OPG cost)
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-3 justify-center pt-4">
+                    <button @click="shareResult" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2">
+                        <i class="fas fa-share-alt"></i>
+                        Share
+                    </button>
+                    <button @click="copyResult" class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors flex items-center gap-2">
+                        <i class="fas fa-copy"></i>
+                        Copy JSON
+                    </button>
+                    <button @click="reset" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors flex items-center gap-2">
+                        <i class="fas fa-plus"></i>
+                        Check Another
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div v-if="stats" class="max-w-4xl mx-auto glass rounded-2xl shadow-2xl p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-chart-bar"></i>
+                Statistics
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-purple-50 rounded-lg">
+                    <div class="text-3xl font-bold text-purple-600">{{ stats.total_checks }}</div>
+                    <div class="text-sm text-gray-600 mt-1">Total Checks</div>
+                </div>
+                <div v-for="(count, verdict) in stats.verdicts" :key="verdict" class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl font-bold text-gray-700">{{ count }}</div>
+                    <div class="text-xs text-gray-600 mt-1">{{ verdict }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-white mt-12 opacity-90">
+            <p class="text-sm">
+                Powered by
+                <a href="https://opengradient.ai" target="_blank" class="font-semibold hover:underline">OpenGradient</a>
+                 +
+                <a href="https://memsync.ai" target="_blank" class="font-semibold hover:underline">MemSync</a>
+            </p>
+            <p class="text-xs mt-2 opacity-75">
+                TEE-verified inference • On-chain settlement • Persistent memory
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    claim: '',
+                    selectedModel: 'claude-3.5-haiku',
+                    result: null,
+                    loading: false,
+                    error: null,
+                    stats: null,
+                    apiUrl: window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : (process.env.NEXT_PUBLIC_API_URL || 'https://your-api-url.railway.app/api')
+                };
+            },
+            mounted() {
+                this.loadStats();
+            },
+            methods: {
+                async checkClaim() {
+                    if (!this.claim.trim()) return;
+
+                    this.loading = true;
+                    this.error = null;
+                    this.result = null;
+
+                    try {
+                        const response = await fetch(`${this.apiUrl}/check`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                claim: this.claim,
+                                model: this.selectedModel
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Failed to check claim');
+                        }
+
+                        this.result = data;
+                        this.loadStats();
+                    } catch (err) {
+                        this.error = err.message || 'An error occurred. Make sure the API server is running.';
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                async loadStats() {
+                    try {
+                        const response = await fetch(`${this.apiUrl}/stats`);
+                        if (response.ok) {
+                            this.stats = await response.json();
+                        }
+                    } catch (err) {
+                        // Silently fail
+                    }
+                },
+                verdictClass(verdict) {
+                    const map = {
+                        'TRUE': 'verdict-true',
+                        'FALSE': 'verdict-false',
+                        'MOSTLY_TRUE': 'verdict-mostly-true',
+                        'MOSTLY_FALSE': 'verdict-mostly-false',
+                        'MISLEADING': 'verdict-misleading',
+                        'UNVERIFIABLE': 'verdict-unverifiable'
+                    };
+                    return map[verdict] || 'verdict-unverifiable';
+                },
+                verdictIcon(verdict) {
+                    const map = {
+                        'TRUE': 'fas fa-check-circle',
+                        'FALSE': 'fas fa-times-circle',
+                        'MOSTLY_TRUE': 'fas fa-check',
+                        'MOSTLY_FALSE': 'fas fa-times',
+                        'MISLEADING': 'fas fa-exclamation-triangle',
+                        'UNVERIFIABLE': 'fas fa-question-circle'
+                    };
+                    return map[verdict] || 'fas fa-question-circle';
+                },
+                confidenceColor(confidence) {
+                    if (confidence >= 90) return 'bg-green-500';
+                    if (confidence >= 70) return 'bg-blue-500';
+                    if (confidence >= 50) return 'bg-yellow-500';
+                    return 'bg-red-500';
+                },
+                formatDate(isoString) {
+                    if (!isoString) return 'N/A';
+                    return new Date(isoString).toLocaleString();
+                },
+                shareResult() {
+                    const text = `Fact Check: "${this.result.claim}" → ${this.result.verdict} (${this.result.confidence}% confidence)`;
+                    if (navigator.share) {
+                        navigator.share({ title: 'AI Fact Check', text });
+                    } else {
+                        navigator.clipboard.writeText(text);
+                        alert('Result copied to clipboard!');
+                    }
+                },
+                copyResult() {
+                    navigator.clipboard.writeText(JSON.stringify(this.result, null, 2));
+                    alert('JSON copied to clipboard!');
+                },
+                reset() {
+                    this.claim = '';
+                    this.result = null;
+                    this.error = null;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
