@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Giwa Victor - Resume</title>
+<style>
+  @page { margin: 0.5in 0.6in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+    color: #1a1a1a;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 0.5in 0.6in;
+  }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 18px; border-bottom: 2px solid #2c3e50; padding-bottom: 12px; }
+  .header h1 { font-size: 22pt; font-weight: 700; color: #2c3e50; letter-spacing: 2px; margin-bottom: 6px; }
+  .header .contact { font-size: 9.5pt; color: #555; }
+  .header .contact a { color: #2c3e50; text-decoration: none; }
+  .header .contact span { margin: 0 6px; color: #bbb; }
+
+  /* Sections */
+  .section { margin-bottom: 14px; }
+  .section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+  }
+
+  /* Summary */
+  .summary { font-size: 10pt; color: #333; text-align: justify; }
+
+  /* Education */
+  .edu-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .edu-row .school { font-weight: 600; font-size: 10.5pt; }
+  .edu-row .location { font-size: 9.5pt; color: #666; font-style: italic; }
+  .edu-degree { font-size: 10pt; margin-top: 2px; }
+  .edu-courses { font-size: 9.5pt; color: #555; margin-top: 2px; }
+
+  /* Skills table */
+  .skills-table { width: 100%; border-collapse: collapse; font-size: 10pt; }
+  .skills-table td { padding: 3px 8px; vertical-align: top; }
+  .skills-table td:first-child { font-weight: 600; color: #2c3e50; width: 130px; white-space: nowrap; }
+
+  /* Experience */
+  .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
+  .exp-header .title { font-weight: 600; font-size: 10.5pt; }
+  .exp-header .org { font-style: italic; color: #555; font-size: 10pt; }
+  .exp-list { padding-left: 18px; margin-top: 2px; }
+  .exp-list li { font-size: 10pt; margin-bottom: 2px; color: #333; }
+  .exp-block { margin-bottom: 10px; }
+
+  /* Projects */
+  .proj-block { margin-bottom: 8px; }
+  .proj-title { font-weight: 600; font-size: 10.5pt; }
+  .proj-tech { font-size: 9.5pt; color: #666; font-style: italic; }
+  .proj-desc { font-size: 10pt; color: #333; margin-top: 1px; padding-left: 18px; }
+  .proj-desc li { margin-bottom: 1px; }
+
+  /* Achievements */
+  .ach-list { padding-left: 18px; }
+  .ach-list li { font-size: 10pt; margin-bottom: 2px; color: #333; }
+
+  @media print {
+    body { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>GIWA VICTOR</h1>
+  <div class="contact">
+    giwavictor9@gmail.com
+    <span>|</span>
+    <a href="https://github.com/giwaov">github.com/giwaov</a>
+    <span>|</span>
+    Lagos, Nigeria
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Summary</div>
+  <div class="summary">
+    Privacy technology researcher and open-source contributor with hands-on experience in Multi-Party Computation (MPC), Zero-Knowledge Proofs (ZKP), and Fully Homomorphic Encryption (FHE). 50+ merged pull requests across 25+ blockchain and privacy infrastructure projects. Proficient in Rust, TypeScript, Python, Solidity, and Cairo with a strong focus on building secure, decentralized applications on Solana, Ethereum, and Base.
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Education</div>
+  <div class="edu-row">
+    <span class="school">University of Ibadan</span>
+    <span class="location">Ibadan, Nigeria</span>
+  </div>
+  <div class="edu-degree">Bachelor of Science in Computer Science</div>
+  <div class="edu-courses">Relevant coursework: Cryptography, Distributed Systems, Data Structures &amp; Algorithms, Software Engineering, Computer Networks, Database Systems</div>
+</div>
+
+<div class="section">
+  <div class="section-title">Technical Skills</div>
+  <table class="skills-table">
+    <tr><td>Languages</td><td>Rust, TypeScript, Python, Solidity, Cairo</td></tr>
+    <tr><td>Blockchain</td><td>Solana, Ethereum, Base, Polygon</td></tr>
+    <tr><td>Privacy Tech</td><td>MPC (Arcium), ZKP (Miden, Cairo), FHE (Seismic, Fhenix), TEE (OpenGradient)</td></tr>
+    <tr><td>Tools</td><td>Git, Docker, Next.js, Foundry, Anchor, Node.js</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">Experience</div>
+
+  <div class="exp-block">
+    <div class="exp-header">
+      <span class="title">Privacy Technology Researcher</span>
+      <span class="org">Independent</span>
+    </div>
+    <ul class="exp-list">
+      <li>Research and build proof-of-concept applications across MPC, ZKP, FHE, and TEE privacy paradigms</li>
+      <li>Contributed 50+ merged PRs across 25+ open-source projects with a focus on documentation and developer tooling</li>
+      <li>Achieved 100% merge rate on OpenGradient AI runtime contributions</li>
+      <li>Operate autonomous AI swarm agent on the Fortytwo decentralized knowledge network</li>
+    </ul>
+  </div>
+
+  <div class="exp-block">
+    <div class="exp-header">
+      <span class="title">Open-Source Contributor</span>
+      <span class="org">Various Projects</span>
+    </div>
+    <ul class="exp-list">
+      <li>Contributed to Arcium, Seismic, Fhenix, Miden, and OpenGradient ecosystems</li>
+      <li>Wrote technical documentation, tutorials, and developer guides for privacy-preserving protocols</li>
+      <li>Reviewed and tested protocol implementations across Solana and Ethereum ecosystems</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Projects</div>
+
+  <div class="proj-block">
+    <span class="proj-title">Blind Auction on Arcium</span> <span class="proj-tech">| Rust, TypeScript</span>
+    <ul class="proj-desc">
+      <li>Built a confidential bidding system using Arcium's MPC infrastructure on Solana</li>
+      <li>Bids are encrypted and computed across distributed nodes &mdash; no single party sees any bid</li>
+      <li>Developed full-stack: on-chain program (Rust/Anchor) + frontend (TypeScript/Next.js)</li>
+    </ul>
+  </div>
+
+  <div class="proj-block">
+    <span class="proj-title">Seismic Starter</span> <span class="proj-tech">| Solidity</span>
+    <ul class="proj-desc">
+      <li>Contributed to the starter repository for building applications on Seismic's FHE-powered blockchain</li>
+      <li>Helped developers onboard to encrypted smart contract development</li>
+    </ul>
+  </div>
+
+  <div class="proj-block">
+    <span class="proj-title">Private Contact Discovery</span> <span class="proj-tech">| TypeScript</span>
+    <ul class="proj-desc">
+      <li>Built a privacy-preserving contact matching system using cryptographic protocols</li>
+      <li>Enables users to find mutual contacts without exposing their full contact lists</li>
+    </ul>
+  </div>
+
+  <div class="proj-block">
+    <span class="proj-title">OG DeFi Sentinel</span> <span class="proj-tech">| Python</span>
+    <ul class="proj-desc">
+      <li>Developed a DeFi monitoring and analytics tool for tracking on-chain activity</li>
+      <li>Automated alerts and fact-checking for decentralized finance protocols</li>
+    </ul>
+  </div>
+
+  <div class="proj-block">
+    <span class="proj-title">Fortytwo AI Agent</span> <span class="proj-tech">| Python</span>
+    <ul class="proj-desc">
+      <li>Built and operate an autonomous AI agent competing in a decentralized knowledge marketplace</li>
+      <li>Agent answers questions, judges peer responses, and earns tokens via consensus-based ranking</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Achievements</div>
+  <ul class="ach-list">
+    <li>56 public repositories on GitHub</li>
+    <li>Pull Shark achievement on GitHub (high-volume PR contributor)</li>
+    <li>Active contributor to 4 major privacy technology paradigms (MPC, ZKP, FHE, TEE)</li>
+  </ul>
+</div>
+
+</body>
+</html>

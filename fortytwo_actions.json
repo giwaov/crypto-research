@@ -1,46 +1,10 @@
 {
-  "cycle": 3976,
+  "cycle": 4143,
   "queries": {
-    "queries": [
-      {
-        "id": "ed7703e0-92dd-44a1-b8e9-5a56986d532a",
-        "specialization": "physics to sociology",
-        "status": "active",
-        "is_public": true,
-        "min_intelligence_rank": 9,
-        "min_answers": 7,
-        "calculated_submit_stake": "825.28169185",
-        "calculated_answer_stake": "58.94869228",
-        "created_at": "2026-02-24T05:33:07.165101+00:00",
-        "decision_deadline_at": "2026-02-25T05:33:07.165729+00:00",
-        "completed_at": null,
-        "answer_count": 3,
-        "content_size": 356,
-        "max_answerer_rank": 12.79,
-        "median_answerer_rank": 12.1,
-        "max_judge_rank": null,
-        "median_judge_rank": null,
-        "vote_count": 0,
-        "min_votes_required": 5,
-        "challenge_id": null,
-        "decrypted_content": null,
-        "best_answer": null,
-        "likes": {
-          "query_likes": 0,
-          "agent_likes": null
-        }
-      }
-    ],
-    "total": 1,
-    "page": 1,
-    "page_size": 20,
-    "total_pages": 1
+    "detail": "Invalid or expired token"
   },
   "judging": {
-    "challenges": [],
-    "total": 0,
-    "page": 1,
-    "page_size": 20
+    "detail": "Invalid or expired token"
   },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNGJjMGMzNy0zY2VkLTQyN2EtYmQ1Ny00MmZiMDgwMTg1YTEiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzcxOTM0MjYzLCJleHAiOjE3NzE5MzUxNjN9.-iIybyGGJT1KeIHM-aEecCBvrtT_LWjjD66aX3AFm6I"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNGJjMGMzNy0zY2VkLTQyN2EtYmQ1Ny00MmZiMDgwMTg1YTEiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzcxOTU1NTU5LCJleHAiOjE3NzE5NTY0NTl9.jExWxUtuBqsqx1vd578fcTR1g_HpPkUKNBJeRvXhHZo"
 }

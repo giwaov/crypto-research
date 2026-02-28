@@ -1,0 +1,31 @@
+{
+  "network": "mainnet",
+  "deployer": "SP3E0DQAHTXJHH5YT9TZCSBW013YXZB25QFDVXXWY",
+  "timestamp": "2026-02-28T09:45:26.356Z",
+  "contracts": [
+    {
+      "name": "tip-jar-v2",
+      "contractId": "SP3E0DQAHTXJHH5YT9TZCSBW013YXZB25QFDVXXWY.tip-jar-v2",
+      "txid": "78599bec064fba129b967a20a4e086bf60f33a8bd4a1032f27206e4076e09696",
+      "explorer": "https://explorer.stacks.co/txid/78599bec064fba129b967a20a4e086bf60f33a8bd4a1032f27206e4076e09696?chain=mainnet"
+    },
+    {
+      "name": "voting-v2",
+      "contractId": "SP3E0DQAHTXJHH5YT9TZCSBW013YXZB25QFDVXXWY.voting-v2",
+      "txid": "901cef118b519a0eec66712f6362d570d0eeac82c7049f6ece107a6d6d13a2b3",
+      "explorer": "https://explorer.stacks.co/txid/901cef118b519a0eec66712f6362d570d0eeac82c7049f6ece107a6d6d13a2b3?chain=mainnet"
+    },
+    {
+      "name": "nft-v2",
+      "contractId": "SP3E0DQAHTXJHH5YT9TZCSBW013YXZB25QFDVXXWY.nft-v2",
+      "txid": "e6dee651fef9c9528a59a14971940ce140068d55071bad7fbec0182b257bad3a",
+      "explorer": "https://explorer.stacks.co/txid/e6dee651fef9c9528a59a14971940ce140068d55071bad7fbec0182b257bad3a?chain=mainnet"
+    },
+    {
+      "name": "auction-v2",
+      "contractId": "SP3E0DQAHTXJHH5YT9TZCSBW013YXZB25QFDVXXWY.auction-v2",
+      "txid": "50baf42b742db9c190f27f6f6bebf897db06a437f9d458510d76ffc03bee8b8d",
+      "explorer": "https://explorer.stacks.co/txid/50baf42b742db9c190f27f6f6bebf897db06a437f9d458510d76ffc03bee8b8d?chain=mainnet"
+    }
+  ]
+}
