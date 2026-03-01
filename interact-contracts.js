@@ -18,7 +18,8 @@ const { generateWallet, getStxAddress } = require("@stacks/wallet-sdk");
 const crypto = require("crypto");
 
 // Config
-const MNEMONIC = "***REMOVED***";
+const MNEMONIC = process.env.STX_MNEMONIC;
+if (!MNEMONIC) throw new Error("STX_MNEMONIC environment variable is required");
 const CONTRACT_OWNER = "SP3E0DQAHTXJHH5YT9TZCSBW013YXZB25QFDVXXWY";
 const network = STACKS_MAINNET;
 

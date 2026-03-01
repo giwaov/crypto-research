@@ -4,7 +4,9 @@ const {generateWallet,getStxAddress} = require('@stacks/wallet-sdk');
 const fs = require('fs');
 
 async function deploy() {
-  const wallet = await generateWallet({secretKey:'***REMOVED***',password:''});
+  const mnemonic = process.env.STX_MNEMONIC;
+  if (!mnemonic) throw new Error("STX_MNEMONIC environment variable is required");
+  const wallet = await generateWallet({secretKey:mnemonic,password:''});
   const account = wallet.accounts[0];
   const privateKey = account.stxPrivateKey;
   const address = getStxAddress({account,transactionVersion:TransactionVersion.Mainnet});

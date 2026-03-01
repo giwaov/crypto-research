@@ -13,8 +13,9 @@ const { generateWallet, getStxAddress } = require("@stacks/wallet-sdk");
 const fs = require("fs");
 const path = require("path");
 
-// Mnemonic (set via environment or replace directly for one-time use)
-const MNEMONIC = process.env.STX_MNEMONIC || "***REMOVED***";
+// Mnemonic - set via STX_MNEMONIC environment variable
+const MNEMONIC = process.env.STX_MNEMONIC;
+if (!MNEMONIC) throw new Error("STX_MNEMONIC environment variable is required");
 
 // Network
 const network = STACKS_MAINNET;

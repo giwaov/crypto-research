@@ -15,12 +15,15 @@ Controls:
 
 import asyncio
 import json
+import os
 import sys
 import time
 import threading
 from pynput import keyboard
 
-API_KEY = "***REMOVED***"
+API_KEY = os.environ.get("OPENMIND_API_KEY")
+if not API_KEY:
+    raise ValueError("OPENMIND_API_KEY environment variable is required")
 COMMAND_URL = f"wss://api.openmind.org/api/core/teleops/command?api_key={API_KEY}"
 VIDEO_URL = f"wss://api.openmind.org/api/core/teleops/video?api_key={API_KEY}"
 

@@ -2,7 +2,8 @@ const {makeContractCall,AnchorMode,PostConditionMode,uintCV,stringUtf8CV,stringA
 const {STACKS_MAINNET,TransactionVersion} = require('@stacks/network');
 const {generateWallet,getStxAddress} = require('@stacks/wallet-sdk');
 
-const MNEMONIC = "***REMOVED***";
+const MNEMONIC = process.env.STX_MNEMONIC;
+if (!MNEMONIC) throw new Error("STX_MNEMONIC environment variable is required");
 const ADDR = "SP3E0DQAHTXJHH5YT9TZCSBW013YXZB25QFDVXXWY";
 
 async function broadcast(tx, name) {
